@@ -1,12 +1,13 @@
 import os
 
+from engine.exceptions import WrongRobotsFormatError
 from engine.index import SearchIndex
 from engine.query_generator import SearchQueryGenerator
 from engine.parser import Parser
 
 
 class SearchEngine:
-    def __init__(self, url, stop_words_file, *site_exceptions):
+    def __init__(self, url, stop_words_file, robots_file):
         headers = {
             'accept': 'text/html,application/xhtml+xml,'
                       'application/xml;q=0.9,'
@@ -15,12 +16,30 @@ class SearchEngine:
             'User-agent': 'Mozilla/5.0'
         }
 
-        with open(f'{os.getcwd()}/{stop_words_file}', encoding='UTF-8') as file:
-            self.stop_words = map(lambda word: word.replace('\n', ''), file.readlines())
+        with open(f'{os.getcwd()}/{stop_words_file}',
+                  encoding='UTF-8') as file:
+            self.stop_words = map(lambda word: word.replace('\n', ''),
+                                  file.readlines())
 
-        self.parser = Parser(url, self.stop_words, headers, *site_exceptions)
+        site_exceptions = []
+        site_additional = []
+        with open(f'{os.getcwd()}/{robots_file}',
+                  encoding='UTF-8') as file:
+            for line in file.readlines():
+                if len(line.split()) > 2 or '-' not in line and '+' not in line:
+                    raise WrongRobotsFormatError('Wrong robots.txt format')
+                char, page_url = line.replace('\n', '').split()
+                if char == '-':
+                    site_exceptions.append(page_url)
+                elif char == '+':
+                    site_additional.append(page_url)
+
+        self.parser = Parser(url, self.stop_words,
+                             headers, site_exceptions,
+                             site_additional)
         self.index = SearchIndex(self.parser, self.stop_words)
-        self.query_generator = SearchQueryGenerator(self.index, self.stop_words)
+        self.query_generator = SearchQueryGenerator(self.index,
+                                                    self.stop_words)
 
         self.index.load_index()
 
@@ -28,12 +47,15 @@ class SearchEngine:
         self.index.create()
 
     def handle_query(self, text_query: str) -> list:
-        return self.make_format_response(self.query_generator.phrase_query(text_query))
+        return self.make_format_response(self
+                                         .query_generator
+                                         .phrase_query(text_query))
 
     def make_format_response(self, results) -> list:
         response = []
         for result in results:
-            title, text = self.parser.get_info(f'{self.parser.main_url}{result}')
+            title, text = self.parser.get_info(f'{self.parser.main_url}'
+                                               f'{result}')
             response.append({'title': title,
                              'text': text,
                              'href': f'{self.parser.main_url}{result}'})
@@ -41,5 +63,5 @@ class SearchEngine:
 
 
 if __name__ == '__main__':
-    engine = SearchEngine('http://gimnazia6.ru/', 'stop_words.txt', '/special', '/auth', '/photo')
+    engine = SearchEngine('http://gimnazia6.ru/', 'stop_words.txt', 'robots.txt')
     print(engine.handle_query('гимназия'))

@@ -6,9 +6,11 @@ from time import sleep
 
 
 class Parser:
-    def __init__(self, url: str, stop_words: iter, request_headers: dict, *exception_urls: str):
+    def __init__(self, url: str, stop_words: iter,
+                 request_headers: dict, exception_urls: list,
+                 additional_urls: list):
         self.main_url = url
-        self.urls = []
+        self.urls = additional_urls
         self.exception_urls = exception_urls
         self.headers = request_headers
         self.content_dict = {}
@@ -19,10 +21,12 @@ class Parser:
         self._get_urls_from_page('')
 
     def _get_urls_from_page(self, page_url: str):
-        file_formats = ('.pdf', '.txt', '.xlsx', '.ini', '.xls', '.doc', '.docx', '.ppt', '.pptx')
+        file_formats = ('.pdf', '.txt', '.xlsx', '.ini', '.xls',
+                        '.doc', '.docx', '.ppt', '.pptx')
         content = self.status_code_handler(f'{self.main_url}/{page_url}')
         soup = BeautifulSoup(content.text, 'html.parser')
-        self.content_dict[page_url] = filter_text(soup.get_text(), stop_words=self.stop_words)
+        self.content_dict[page_url] = filter_text(soup.get_text(),
+                                                  stop_words=self.stop_words)
         links_queue = []
         for tag in soup.find_all('a'):
             link = tag.get('href')

@@ -15,5 +15,6 @@ def morph_word(word):
 def filter_text(text, stop_words):
     text = text.lower()
     text = edit_string(text)
-    text = map(morph_word, filter(lambda word: word not in stop_words, text.split()))
+    text = map(morph_word, filter(lambda word: word not in stop_words,
+                                  text.split()))
     return text

@@ -1,10 +1,12 @@
 from engine.utils import edit_string, morph_word, filter_text
 from engine.index import SearchIndex
 from engine.query_generator.handler import QueryHandler
+from math import log
 
 
 class SearchQueryGenerator:
-    def __init__(self, index: SearchIndex, stop_words, range_algorithm: callable = None):
+    def __init__(self, index: SearchIndex, stop_words,
+                 range_algorithm: callable = None):
         self.index = index
         if range_algorithm is None:
             self.range_algorithm = self.standard_range
@@ -42,13 +44,22 @@ class SearchQueryGenerator:
                 result.append(page)
         return self.range_algorithm(query_list, result)
 
-    # ранжирование результатов на основе частоты вхождения слов
+    # tf-idf ранжирование
     def standard_range(self, query: list, results: list) -> list:
-        rating = {result: 0 for result in results}
+        count_word = {result: 0 for result in results}
         for word in query:
             for result in results:
                 if result in self.index.total_index[word]:
-                    rating[result] += len(self.index.total_index[word][result])
+                    count_word[result] += len(self.index
+                                              .total_index[word][result])
+        sum_words = {result: 0 for result in results}
+        for value in self.index.total_index.values():
+            for page in value:
+                if page in results:
+                    sum_words += len(page)
+        rating = {result: (count_word[result] / sum_words[result]) *
+                          log(self.index.count_pages / len(results))
+                  for result in results}
         buffer_list = list(rating.items())
         buffer_list.sort(key=lambda i: -i[1])
         return [pair[0] for pair in buffer_list]
