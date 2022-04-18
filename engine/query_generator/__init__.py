@@ -1,10 +1,16 @@
-from utils import edit_string, morph_word, morph_words, filter_text
-from index import SearchIndex
+from engine.utils import edit_string, morph_word, morph_words, filter_text
+from engine.index import SearchIndex
+from engine.query_generator.handler import QueryHandler
 
 
-class QuerySet:
-    def __init__(self, index: SearchIndex):
+class SearchQueryGenerator:
+    def __init__(self, index: SearchIndex, range_algorithm: callable = None):
         self.index = index
+        if range_algorithm is None:
+            self.range_algorithm = self.standard_range
+        else:
+            self.range_algorithm = range_algorithm
+        self.handler = QueryHandler()
 
     def __one_word_query__(self, word: str) -> list:
         total_index = self.index.total_index
@@ -34,10 +40,10 @@ class QuerySet:
                     temp[i][ind] -= i
             if set(temp[0]).intersection(*temp):
                 result.append(filename)
-        return self.range_results(query_list, result)
+        return self.range_algorithm(query_list, result)
 
     # ранжирование результатов на основе частоты вхождения слов
-    def range_results(self, query: list, results: list) -> list:
+    def standard_range(self, query: list, results: list) -> list:
         rating = {result: 0 for result in results}
         for word in query:
             for result in results:
