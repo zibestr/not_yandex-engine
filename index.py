@@ -1,6 +1,7 @@
-import re
 import os
-import pymorphy2
+from time import sleep
+from utils import filter_text
+import threading
 
 
 class SearchIndex:
@@ -13,33 +14,20 @@ class SearchIndex:
         self.file_terms = {}
         self.total_index = {}
 
-    # переводит слова в именительный падеж
-    @staticmethod
-    def morph_text(text):
-        morph = pymorphy2.MorphAnalyzer()
-        return [morph.parse(word)[0].normal_form for word in text]
-
-    # фильтрует базар
-    def filter_text(self, text):
-        text = text.lower()
-        pattern = re.compile('[\W_]+')
-        text = pattern.sub(' ', text)
-        text = text.split()
-        stop_words = self.make_stop_words()
-        text = self.morph_text(text)
-        text = [word for word in text if word not in stop_words]
-        return text
+    # устанавливает директорию файлов
+    def set_directory(self, directory):
+        self.files_directory = directory
 
     # делает промежуточные хеш таблицы
-    def process_files(self):
+    def _process_files(self):
         for file in self.filenames:
-            with open(f'{self.files_directory}/{file}', encoding='UTF-8') as file_text:
-                self.file_terms[file] = self.filter_text(file_text.read())
+            with open(file, encoding='UTF-8') as file_text:
+                self.file_terms[file] = filter_text(file_text.read(), stop_words_file=self.stop_words_file)
         return self.file_terms
 
     # индексирует один файл
     @staticmethod
-    def index_one_file(terms):
+    def _index_one_file(terms):
         file_index = {}
         for index, word in enumerate(terms):
             if word in file_index.keys():
@@ -49,28 +37,25 @@ class SearchIndex:
         return file_index
 
     # индексирует все файлы
-    def index_all_files(self):
+    def _index_all_files(self):
         sl = {}
         for key, terms in self.file_terms.items():
-            sl[key] = self.index_one_file(terms)
+            sl[key] = self._index_one_file(terms)
         self.file_terms = sl
 
     # формирует окончательный индекс
-    def full_index(self):
+    def _full_index(self):
+        buffer = {}
         for filename in self.file_terms.keys():
             for word in self.file_terms[filename].keys():
-                if word in self.total_index.keys():
-                    if filename in self.total_index[word].keys():
-                        self.total_index[word][filename].extend(self.file_terms[filename][word][:])
+                if word in buffer.keys():
+                    if filename in buffer[word].keys():
+                        buffer[word][filename].extend(self.file_terms[filename][word][:])
                     else:
-                        self.total_index[word][filename] = self.file_terms[filename][word]
+                        buffer[word][filename] = self.file_terms[filename][word]
                 else:
-                    self.total_index[word] = {filename: self.file_terms[filename][word]}
-
-    # загружает стоп слова
-    def make_stop_words(self):
-        with open(self.stop_words_file, encoding='UTF-8') as file:
-            return [word.replace('\n', '') for word in file.readlines()]
+                    buffer[word] = {filename: self.file_terms[filename][word]}
+        self.total_index = buffer
 
     # находит все файлы для поиска
     def read_files(self):
@@ -78,12 +63,17 @@ class SearchIndex:
         self.filenames = files
 
     # формирует индекс
-    def create(self):
-        self.process_files()
-        self.index_all_files()
-        self.full_index()
+    def _create(self):
+        self._process_files()
+        self._index_all_files()
+        self._full_index()
 
+    def update_observer_index(self):
+        while True:
+            sleep(5)
+            self._create()
 
-search = SearchIndex()
-search.create()
-print(search.total_index)
+    def run(self):
+        self._create()
+        index_thread = threading.Thread(target=self.update_observer_index, daemon=True)
+        index_thread.start()
