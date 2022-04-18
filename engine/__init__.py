@@ -1,13 +1,45 @@
+import os
+
 from engine.index import SearchIndex
 from engine.query_generator import SearchQueryGenerator
 from engine.parser import Parser
 
 
 class SearchEngine:
-    def __init__(self, *urls):
-        self.parser = Parser(*urls)
-        self.index = SearchIndex(self.parser)
-        self.query_generator = SearchQueryGenerator(self.index)
+    def __init__(self, url, stop_words_file, *site_exceptions):
+        headers = {
+            'accept': 'text/html,application/xhtml+xml,'
+                      'application/xml;q=0.9,'
+                      'image/webp,image/apng,*/*;q=0.8',
+            'upgrade-insecure-requests': '1',
+            'User-agent': 'Mozilla/5.0'
+        }
 
-    def handle_query(self, query: str) -> list:
-        pass
+        with open(f'{os.getcwd()}/{stop_words_file}', encoding='UTF-8') as file:
+            self.stop_words = map(lambda word: word.replace('\n', ''), file.readlines())
+
+        self.parser = Parser(url, self.stop_words, headers, *site_exceptions)
+        self.index = SearchIndex(self.parser, self.stop_words)
+        self.query_generator = SearchQueryGenerator(self.index, self.stop_words)
+
+        self.index.load_index()
+
+    def recreate_index(self):
+        self.index.create()
+
+    def handle_query(self, text_query: str) -> list:
+        return self.make_format_response(self.query_generator.phrase_query(text_query))
+
+    def make_format_response(self, results) -> list:
+        response = []
+        for result in results:
+            title, text = self.parser.get_info(f'{self.parser.main_url}{result}')
+            response.append({'title': title,
+                             'text': text,
+                             'href': f'{self.parser.main_url}{result}'})
+        return response
+
+
+if __name__ == '__main__':
+    engine = SearchEngine('http://gimnazia6.ru/', 'stop_words.txt', '/special', '/auth', '/photo')
+    print(engine.handle_query('гимназия'))

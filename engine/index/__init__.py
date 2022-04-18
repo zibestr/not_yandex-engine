@@ -1,80 +1,80 @@
-import os
-from time import sleep
-from engine.utils import filter_text
 import threading
+
+import json
+
+import os
 
 
 class SearchIndex:
-    def __init__(self, parser):
+    def __init__(self, parser, stop_words):
         self.parser = parser
-        self.stop_words_file = 'stop_words.txt'
-        self.files_directory = 'files/'
-        self.filenames = []
 
-        self.file_terms = {}
+        self.page_terms = {}
         self.total_index = {}
+        self.stop_words = stop_words
 
-    # устанавливает директорию файлов
-    def set_directory(self, directory):
-        self.files_directory = directory
+        self._sl = {}
 
     # делает промежуточные хеш таблицы
-    def _process_files(self):
-        for file in self.filenames:
-            with open(file, encoding='UTF-8') as file_text:
-                self.file_terms[file] = filter_text(file_text.read(), stop_words_file=self.stop_words_file)
-        return self.file_terms
+    def _process_pages(self):
+        self.parser.get_urls()
+        self.page_terms = self.parser.content_dict
+        return self.page_terms
 
     # индексирует один файл
-    @staticmethod
-    def _index_one_file(terms):
-        file_index = {}
-        for index, word in enumerate(terms):
-            if word in file_index.keys():
-                file_index[word].append(index)
+    def _index_one_page(self, terms, key):
+        page_index = {}
+        for ind, word in enumerate(terms):
+            if word in page_index.keys():
+                page_index[word].append(ind)
             else:
-                file_index[word] = [index]
-        return file_index
+                page_index[word] = [ind]
+        self._sl[key] = page_index
+        print(self._sl[key])
 
     # индексирует все файлы
-    def _index_all_files(self):
-        sl = {}
-        for key, terms in self.file_terms.items():
-            sl[key] = self._index_one_file(terms)
-        self.file_terms = sl
+    def _index_all_pages(self):
+        self._sl = {}
+        index_threads = []
+        for key, terms in self.page_terms.items():
+            index_threads.append(threading.Thread(target=self._index_one_page, args=(terms, key)))
+        for thread in index_threads:
+            thread.start()
+        for thread in index_threads:
+            thread.join()
+        self.page_terms = self._sl
+        print('finish')
 
     # формирует окончательный индекс
     def _full_index(self):
         buffer = {}
-        for filename in self.file_terms.keys():
-            for word in self.file_terms[filename].keys():
+        for page_url in self.page_terms.keys():
+            for word in self.page_terms[page_url].keys():
                 if word in buffer.keys():
-                    if filename in buffer[word].keys():
-                        buffer[word][filename].extend(self.file_terms[filename][word][:])
+                    if page_url in buffer[word].keys():
+                        buffer[word][page_url].extend(self.page_terms[page_url][word][:])
                     else:
-                        buffer[word][filename] = self.file_terms[filename][word]
+                        buffer[word][page_url] = self.page_terms[page_url][word]
                 else:
-                    buffer[word] = {filename: self.file_terms[filename][word]}
+                    buffer[word] = {page_url: self.page_terms[page_url][word]}
+            print(len(buffer))
         self.total_index = buffer
 
-    # добавляет файлы для поиска
-    def add_files(self, directory):
-        files = os.listdir(directory)
-        files = [f'{directory}/{file}' for file in files]
-        self.filenames.extend(files)
-
     # формирует индекс
-    def _create(self):
-        self._process_files()
-        self._index_all_files()
+    def create(self):
+        self._process_pages()
+        self._index_all_pages()
         self._full_index()
 
-    def update_observer_index(self):
-        while True:
-            sleep(5)
-            self._create()
+        self.save_index()
 
-    def run(self):
-        self._create()
-        index_thread = threading.Thread(target=self.update_observer_index, daemon=True)
-        index_thread.start()
+    def save_index(self):
+        with open(f'{self.parser.main_url}.json', 'w', encoding='UTF-8') as save_file:
+            json.dump(self.total_index, save_file, indent=4, ensure_ascii=False)
+
+    def load_index(self):
+        if 'save.json' in os.listdir():
+            with open(f'{self.parser.main_url}.json', 'r', encoding='UTF-8') as load_file:
+                self.total_index = json.load(load_file)
+        else:
+            self.create()
