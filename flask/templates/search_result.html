@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <title>{{ query }} - Поиск в notYandex</title>
+</head>
+<body>
+    <header class="header-search">
+        <a href="/documentation"><img src="{{url_for('static', filename='img/Documentation.png')}}" class="document-logo side-logo-d" title="Документация"></a>
+        <a href="/settings"><img src="{{url_for('static', filename='img/Settings.png')}}" class="settings-logo side-logo-s" title="Настройки"></a>
+        <a href="/" class="to-home"><img src="{{url_for('static', filename='img/Logo.png')}}" alt="Логотип" class="logo-result"></a>
+        <form id="search" method="post" action="/" class="search-form">
+            <img src="{{url_for('static', filename='img/Post.png')}}" class="post-icon-result" onclick="search.submit()">
+            <input name="text" value="{{ query }}" type="text" placeholder="Введите поисковый запрос" class="search-result" autocomplete="off">
+            <img src="{{url_for('static', filename='img/Search.png')}}" class="result-icon">
+            <span class="message-main"> {{ message }}</span>
+        </form>
+    </header>
+    <nav class="block"></nav>
+    <main>
+        <p class="count-results"> Результатов: {{ count }}</p>
+        {% for result in results %}
+            <div class="block-result">
+                {% set list_=result['href'].split('/')%}
+                <p class="href-text"> {{  list_[0] }}//{{  list_[2] }}<span class="href-dop">
+                        › {{ ' › '.join( list_[3:]) }} </span>
+                </p>
+                <a href="{{ result['href'] }}" class="href-result"> {{ result['title'] }} </a>
+                <p class="desc-result">{{ result["text"] }}</p>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>

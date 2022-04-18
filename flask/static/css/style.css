@@ -1,0 +1,417 @@
+@font-face {
+    font-family: Yandex Sans Display;
+    src: url('static/fonts/YandexSansDisplay-Light.ttf');
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: Yandex Sans Display;
+    src: url('static/fonts/YandexSansDisplay-Regular.ttf');
+    font-weight: bold;
+}
+
+.search{
+    display: block;
+    width: 465px;
+    height: 45px;
+    outline: 0;
+    border: 0;
+    box-shadow: 0 0 5px 0 #888;
+    border-radius: 40px;
+    margin-top: 70px;
+}
+
+.search[type="text"]{
+    padding-left: 52px;
+    padding-right: 44px;
+    font-size: 16px;
+}
+
+.search_help:focus{
+    border-radius: 10px 10px 0 0;
+}
+
+.helping{
+    display: none;
+}
+
+.helping:hover{
+    display: block;
+}
+
+.search_help:focus~.helping{
+    display: block;
+}
+
+.logo{
+    display: block;
+    height: 92px;
+    width: auto;
+    margin: 0 auto;
+    margin-top: 135px;
+}
+
+.search-icon{
+    width: 15px;
+    height: auto;
+    position: absolute;
+    margin-left: 17px;
+    margin-top: 16px;
+}
+
+.main-form{
+    width: 560px;
+    margin: 0 auto;
+}
+
+.post-icon{
+    width: 30px;
+    height: auto;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 520px;
+    margin-top: 9px;
+}
+
+.document-logo{
+    position: absolute;
+    width: 40px;
+    height: auto;
+    right: 70px;
+    top: 20px;
+}
+
+.settings-logo{
+    position: absolute;
+    width: 40px;
+    height: auto;
+    right: 20px;
+    top: 20px;
+}
+
+.message-main{
+    display: block;
+    font-family: Yandex Sans Display;
+    margin: 0 auto;
+    width: 130px;
+    margin-top: 10px;
+}
+
+.header-search{
+    position: fixed;
+    width: 100%;
+    height: 70px;
+    box-shadow: 0 0 7px 0px #888;
+    top: 0;
+    left: 0;
+}
+
+.logo-result{
+    height: 30px;
+    width: auto;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+
+.search-form{
+    position: absolute;
+    width: 500px;
+    margin-left: 175px;
+}
+
+.to-home{
+    position: absolute;
+}
+
+.post-icon-result{
+    width: 30px;
+    height: auto;
+    position: absolute;
+    cursor: pointer;
+    margin-left: 490px;
+    margin-top: 21px;
+}
+
+.search-result{
+    display: block;
+    width: 465px;
+    height: 30px;
+    outline: 0;
+    border: 0;
+    box-shadow: 0 0 5px 0 #888;
+    border-radius: 40px;
+    margin-top: 20px;
+}
+
+.search-result[type="text"]{
+    padding-left: 22px;
+    padding-right: 44px;
+    font-size: 16px;
+}
+
+.search-result:focus{
+    margin-left: -20px;
+}
+
+.search-result:focus~.result-icon{
+    display: block;
+}
+
+.search-result[type="text"]:focus{
+    padding-left: 42px;
+}
+
+.result-icon{
+    width: 15px;
+    height: auto;
+    position: absolute;
+    margin-left: -5px;
+    margin-top: -23px;
+    display: none;
+}
+
+.side-logo-d{
+    top: 15px;
+}
+
+.side-logo-s{
+    top: 15px;
+}
+
+.block{
+    height: 70px;
+    top: 0;
+    right: 0;
+}
+
+.count-results{
+    font-family: Yandex Sans Display;
+    color: #7a7a7a;
+    margin-left: 180px;
+    margin-top: 0;
+}
+
+.block-result{
+    margin-left: 180px;
+    margin-top: 30px;
+}
+
+.href-text{
+    font-family: Yandex Sans Display;
+    color: black;
+    font-size: 15px;
+    font-weight: normal;
+    margin-bottom: 5px;
+}
+
+.href-dop{
+    color: #7a7a7a;
+}
+
+.href-result{
+    font-weight: normal;
+    font-family: Yandex Sans Display;
+    font-size: 20px;
+    text-decoration: none;
+    color: #1a0dab;
+}
+
+.href-result:hover{
+    text-decoration: underline;
+}
+
+.desc-result{
+    font-family: Verdana, Geneva, sans-serif;
+    color: #7a7a7a;
+    display: block;
+    width: 600px;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+input::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
+.search-list{
+    width: 500px;
+    display: block;
+}
+
+.helpers{
+    position: absolute;
+}
+
+.help-shadow{
+    width: 561px;
+    height: 45px;
+    box-shadow: 0 0 5px 0 #888;
+}
+
+.help{
+    width: 561px;
+    height: 45px;
+    background-color: white;
+    margin-top: -5px;
+    display: block;
+    text-decoration: none;
+    color: black;
+}
+
+.help:hover{
+    background-color: #e8e8e9;
+}
+
+.help-shadow:last-child{
+    border-radius: 0 0 10px 10px;
+}
+
+.help-text{
+    display: block;
+    font-size: 19px;
+    padding-top: 10px;
+    font-family: Verdana, Geneva, sans-serif;
+    margin-left: 50px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 450px;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+.clock{
+    position: absolute;
+    width: 20px;
+    height: auto;
+    margin-top: 13px;
+    margin-left: 15px;
+}
+
+.close-help{
+    position: absolute;
+    width: 12px;
+    height: auto;
+    right: 10px;
+    padding-top: 16px;
+    z-index: 5;
+}
+
+.circle-help {
+    position: absolute;
+    width: 25px;
+    height: auto;
+    right: 4px;
+    padding-top: 10px;
+    display: none;
+    z-index: 0;
+}
+
+.close-help:hover{
+    cursor: pointer;
+}
+
+.close-help:hover~.circle-help{
+    display: block;
+}
+
+@media screen and (max-width: 1300px) {
+    .block-result{
+        margin-left: 8vw;
+    }
+
+    .count-results{
+        margin-left: 8vw;
+    }
+
+    .logo-result{
+        margin-left: 8.5vw;
+    }
+
+    .search-form{
+        margin-left: 24vw;
+    }
+
+    .search-result{
+        width: 420px;
+    }
+
+    .post-icon-result{
+        margin-left: 450px;
+    }
+}
+
+@media screen and (max-width: 830px) {
+    .block-result{
+        margin-left: 65px;
+    }
+
+    .count-results{
+        margin-left: 65px;
+    }
+
+    .logo-result{
+        margin-left: 75px;
+    }
+
+    .search-form{
+        margin-left: 200px;
+    }
+
+    .side-logo-d{
+        left: 720px;
+        top: 15px;
+    }
+
+    .side-logo-s{
+        left: 770px;
+        top: 15px;
+    }
+}
+
+@media screen and (max-width: 670px) {
+    .main-form{
+        width: 450px;
+    }
+
+    .search{
+        width: 350px;
+    }
+
+    .post-icon{
+        margin-left: 400px;
+    }
+
+    .help-shadow{
+        width: 446px;
+    }
+
+    .help{
+        width: 446px;
+    }
+}
+
+
+@media screen and (max-width: 560px) {
+    .main-form{
+        width: 335px;
+    }
+
+    .search{
+        width: 240px;
+    }
+
+    .post-icon{
+        margin-left: 300px;
+    }
+
+    .help-shadow{
+        width: 336px;
+    }
+
+    .help{
+        width: 336px;
+    }
+}
