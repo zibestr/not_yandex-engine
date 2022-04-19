@@ -63,4 +63,4 @@ class SearchEngine:
 
 if __name__ == '__main__':
     engine = SearchEngine('https://telegram.org/', 'stop_words.txt', 'robots.txt')
-    print(engine.handle_query('мессенджер'))
+    print(engine.handle_query('telegram'))

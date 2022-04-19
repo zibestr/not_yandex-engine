@@ -38,7 +38,6 @@ class SearchIndex:
             else:
                 page_index[word] = [ind]
         self._sl[key] = page_index
-        print(self._sl[key])
 
     # индексирует все файлы
     def _index_all_pages(self):
@@ -91,6 +90,10 @@ class SearchIndex:
             with open('saved indexes/' + self.save_filename,
                       'r', encoding='UTF-8') as load_file:
                 self.total_index = json.load(load_file)
+            pages = set()
+            for value in self.total_index.values():
+                for page in value.keys():
+                    pages.add(page)
+            self.count_pages = len(pages)
         else:
             self.create()
-        print(self.total_index)
