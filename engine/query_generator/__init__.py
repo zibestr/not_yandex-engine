@@ -2,7 +2,6 @@ from engine.utils import edit_string, morph_word, filter_text
 from engine.index import SearchIndex
 from engine.query_generator.handler import QueryHandler
 from math import log, sqrt
-from pprint import pprint
 
 
 class SearchQueryGenerator:

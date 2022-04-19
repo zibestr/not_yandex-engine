@@ -16,6 +16,9 @@ class Parser:
         self.content_dict = {}
         self.stop_words = stop_words
 
+    def change_url(self, url: str):
+        self.main_url = url
+
     def get_urls(self):
         self.urls = []
         self._get_urls_from_page(self.main_url)
