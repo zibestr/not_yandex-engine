@@ -6,3 +6,8 @@ class PageNotAvailableError(Exception):
 class WrongRobotsFormatError(Exception):
     def __init__(self, *message):
         super().__init__(*message)
+
+
+class WrongQueryError(Exception):
+    def __init__(self, *message):
+        super().__init__(*message)
