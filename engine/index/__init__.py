@@ -22,6 +22,13 @@ class SearchIndex:
 
         self.count_pages = 0
 
+    def change_url(self):
+        self.save_filename = (self.parser.main_url
+                              .replace('https://', '')
+                              .replace('http://', '')
+                              .replace('/', '')
+                              + '.json')
+
     # делает промежуточные хеш таблицы
     def _process_pages(self) -> dict:
         self.parser.get_urls()

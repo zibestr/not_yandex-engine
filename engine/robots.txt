@@ -4,9 +4,6 @@
 - /apps
 - /img
 - https://core.telegram.org
-- https://core.telegram.org/mtproto
-- https://core.telegram.org/schema
-- https://core.telegram.org/dl
 - https://translations.telegram.org
 - https://macos.telegram.org
 - https://desktop.telegram.org
