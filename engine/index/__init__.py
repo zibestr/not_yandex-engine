@@ -14,8 +14,7 @@ class SearchIndex:
         self.stop_words = stop_words
 
         self._sl = {}
-        self.save_filename = ('saved indexes'
-                              + self.parser.main_url
+        self.save_filename = (self.parser.main_url
                               .replace('https://', '')
                               .replace('http://', '')
                               .replace('/', '')
@@ -53,7 +52,6 @@ class SearchIndex:
         for thread in index_threads:
             thread.join()
         self.page_terms = self._sl
-        print('finally')
 
     # формирует окончательный индекс
     def _full_index(self):
@@ -83,15 +81,16 @@ class SearchIndex:
         self.save_index()
 
     def save_index(self):
-        with open(self.save_filename,
+        with open('saved indexes/' + self.save_filename,
                   'w', encoding='UTF-8') as save_file:
             json.dump(self.total_index, save_file,
                       indent=4, ensure_ascii=False)
 
     def load_index(self):
-        if 'save.json' in os.listdir():
-            with open(self.save_filename,
+        if self.save_filename in os.listdir('saved indexes'):
+            with open('saved indexes/' + self.save_filename,
                       'r', encoding='UTF-8') as load_file:
                 self.total_index = json.load(load_file)
         else:
             self.create()
+        print(self.total_index)
