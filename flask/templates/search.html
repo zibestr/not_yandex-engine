@@ -1,12 +1,13 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="shortcut icon" href="static/img/Logo.ico" type="image/x-icon">
     <title>Поисковик</title>
 </head>
 <body>
-    <a href="/documentation"><img src="static/img/Documentation.png" class="document-logo" title="Документация"></a>
     <a href="/settings"><img src="static/img/Settings.png" class="settings-logo" title="Настройки"></a>
     <img src="{{url_for('static', filename='img/Logo.png')}}" alt="Логотип" class="logo">
     <form id="search" method="post" action="." class="main-form">
@@ -25,7 +26,7 @@
             </div>
             <div class="helpers">
                 {% for help in helpers %}
-                    <a href="/search_result/{{ help }}" class="help">
+                    <a href="/search_result/{{ help }}/1" class="help">
                         <img src="{{url_for('static', filename='img/Clock.png')}}" class="clock">
                         <span class="help-text"> {{ help }}</span>
                     </a>

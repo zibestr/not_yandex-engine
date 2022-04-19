@@ -2,9 +2,26 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="shortcut icon" href="static/img/Logo.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <title>Настройки</title>
 </head>
 <body>
-    <h1> Настройки </h1>
+    <a href="/" class="to-home"><img src="{{url_for('static', filename='img/Logo.png')}}" alt="Логотип" class="logo-settings"></a>
+    <a href="/"><img src="static/img/Home.png" class="settings-logo" title="Настройки"></a>
+    <p class="settings-name">Настройки поиска</p>
+    <hr class="underline-settings">
+    <div class="settings-block"></div>
+    <form action="/settings" class="form-settings" method="post"><p class="first-form-settings">
+        <b >Ссылка на сайт, в котором будет проводиться поиск</b></p>
+        <p><input type="text" class="settings-input" placeholder="Введите ссылку">
+        <p><b>Анализ сайтов и их страниц</b></p>
+        <p>Возможность анализировать только страницу, на которую ведёт указанная ссылка</p>
+        <p><input name="dzen" type="radio" value="nedzen" class="settings-ratio" id="qwe"> Анализировать только страницу, на которую ведёт ссылка</p>
+        <p><input name="dzen" type="radio" value="dzen" class="settings-ratio" id="qwe"> Анализировать все страницы отвлетвления от ссылки</p>
+        <p><input class="btn-settings" type="submit" value="Сохранить"></p>
+        <a href="/" class="btn-cancel">Отмена</a>
+    </form>
 </body>
 </html>
