@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="shortcut icon" href="static/img/Logo.ico" type="image/x-icon">
+    <title>{{ query }} - Поиск в notYandex</title>
+</head>
+<body>
+    <header class="header-search">
+        <a href="/settings"><img src="{{url_for('static', filename='img/Settings.png')}}" class="settings-logo side-logo-s" title="Настройки"></a>
+        <a href="/" class="to-home"><img src="{{url_for('static', filename='img/Logo.png')}}" alt="Логотип" class="logo-result"></a>
+        <form id="search" method="post" action="/" class="search-form">
+            <img src="{{url_for('static', filename='img/Post.png')}}" class="post-icon-result" onclick="search.submit()">
+            {% if helpers %}
+                <input name="text" value="{{ query }}" type="text" placeholder="Введите поисковый запрос" class="search-result search_help" autocomplete="off">
+            {% else %}
+                <input name="text" value="{{ query }}" type="text" placeholder="Введите поисковый запрос" class="search-result" autocomplete="off">
+            {% endif %}
+            <span class="helping-result">
+                <img src="{{url_for('static', filename='img/Search.png')}}" class="result-icon">
+                <div class="helpers-result">
+                    {% for help in helpers %}
+                        <div class="help-shadow help-shadow-result"></div>
+                    {% endfor %}
+                </div>
+                <div class="helpers-result">
+                    {% for help in helpers %}
+                        <a href="/search_result/{{ help }}/1" class="help help-result">
+                            <img src="{{url_for('static', filename='img/Clock.png')}}" class="clock">
+                            <span class="help-text help-text-result"> {{ help }}</span>
+                        </a>
+                    {% endfor %}
+                </div>
+            </span>
+            <span class="message-main"> {{ message }}</span>
+        </form>
+    </header>
+    <nav class="block"></nav>
+    {% if fix_message %}
+        <p class="fix_message"> Показаны результаты по запросу <a href="/search_result/{{ fix_text }}/1" class="fix-href">
+            {% for word in fix_message %}
+                {% if '/fixed' in word %}
+                    <i><b> {{ word.replace('/fixed', '') }} </b></i>
+                {% else %}
+                    {{word}}
+                {% endif %}
+            {% endfor %}
+        </a></p>
+        <p class="fix_message fix_off"> Искать вместо этого <a class="fix-href" href="/search_result/{{ query }}/0"> {{ query }}</a></p>
+    {% endif %}
+    <main>
+        <p class="count-results"> Результатов: {{ count }}</p>
+        {% for result in results %}
+            <div class="block-result">
+                {% set list_=result['href'].split('/')%}
+                <p class="href-text"> {{  list_[0] }}//{{  list_[2] }}<span class="href-dop">
+                        › {{ ' › '.join( list_[3:]) }} </span>
+                </p>
+                <a href="{{ result['href'] }}" class="href-result"> {{ result['title'] }} </a>
+                <p class="desc-result">{{ result["text"] }}</p>
+            </div>
+        {% endfor %}
+    </main>
+</body>
+</html>

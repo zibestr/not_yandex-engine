@@ -1,12 +1,39 @@
 <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+    <link rel="shortcut icon" href="static/img/Logo.ico" type="image/x-icon">
     <title>Поисковик</title>
 </head>
 <body>
-    <form method="post" action=".">
-        <input type="text" value="Введите поисковый запрос">
+    <a href="/settings"><img src="static/img/Settings.png" class="settings-logo" title="Настройки"></a>
+    <img src="{{url_for('static', filename='img/Logo.png')}}" alt="Логотип" class="logo">
+    <form id="search" method="post" action="." class="main-form">
+        <img src="static/img/Search.png" class="search-icon">
+        <img src="static/img/Post.png" class="post-icon" onclick="search.submit()">
+        {% if helpers %}
+            <input name="text" type="text" placeholder="Введите поисковый запрос" class="search search_help" autocomplete="off">
+        {% else %}
+            <input name="text" type="text" placeholder="Введите поисковый запрос" class="search" autocomplete="off">
+        {% endif %}
+        <span class="helping">
+            <div class="helpers">
+                {% for help in helpers %}
+                    <div class="help-shadow"></div>
+                {% endfor %}
+            </div>
+            <div class="helpers">
+                {% for help in helpers %}
+                    <a href="/search_result/{{ help }}/1" class="help">
+                        <img src="{{url_for('static', filename='img/Clock.png')}}" class="clock">
+                        <span class="help-text"> {{ help }}</span>
+                    </a>
+                {% endfor %}
+            </div>
+        </span>
+        <span class="message-main"> {{ message }}</span>
     </form>
 </body>
 </html>
