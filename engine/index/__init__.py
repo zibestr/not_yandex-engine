@@ -14,7 +14,8 @@ class SearchIndex:
         self.stop_words = stop_words
 
         self._sl = {}
-        self.save_filename = (self.parser.main_url
+        self.save_filename = ('saved indexes'
+                              + self.parser.main_url
                               .replace('https://', '')
                               .replace('http://', '')
                               .replace('/', '')
@@ -38,6 +39,7 @@ class SearchIndex:
             else:
                 page_index[word] = [ind]
         self._sl[key] = page_index
+        print(self._sl[key])
 
     # индексирует все файлы
     def _index_all_pages(self):
@@ -51,6 +53,7 @@ class SearchIndex:
         for thread in index_threads:
             thread.join()
         self.page_terms = self._sl
+        print('finally')
 
     # формирует окончательный индекс
     def _full_index(self):
@@ -68,7 +71,7 @@ class SearchIndex:
                                                   [word])
                 else:
                     buffer[word] = {page_url:
-                                        self.page_terms[page_url][word]}
+                                    self.page_terms[page_url][word]}
         self.total_index = buffer
 
     # формирует индекс

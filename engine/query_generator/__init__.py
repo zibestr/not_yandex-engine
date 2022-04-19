@@ -1,7 +1,7 @@
 from engine.utils import edit_string, morph_word, filter_text
 from engine.index import SearchIndex
 from engine.query_generator.handler import QueryHandler
-from math import log
+from math import log, sqrt
 
 
 class SearchQueryGenerator:
@@ -44,7 +44,7 @@ class SearchQueryGenerator:
                 result.append(page)
         return self.range_algorithm(query_list, result)
 
-    # tf-idf ранжирование
+    # tf-idf ранжирование + учёт глубины ссылки
     def standard_range(self, query: list, results: list) -> list:
         count_word = {result: 0 for result in results}
         for word in query:
@@ -59,8 +59,9 @@ class SearchQueryGenerator:
                     sum_words[page] += len(page)
         for key in sum_words.keys():
             sum_words[key] = max(sum_words[key], 1)
-        rating = {result: (count_word[result] / sum_words[result]) *
-                          log(self.index.count_pages / len(results))
+        rating = {result: (count_word[result] / sum_words[result])
+                           * log(self.index.count_pages / len(results))
+                           * (4 / sqrt(len(result.split('/'))) + 1)
                   for result in results}
         buffer_list = list(rating.items())
         buffer_list.sort(key=lambda i: -i[1])

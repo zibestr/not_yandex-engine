@@ -51,17 +51,16 @@ class SearchEngine:
                                          .query_generator
                                          .phrase_query(text_query))
 
-    def make_format_response(self, results) -> list:
+    def make_format_response(self, results: list) -> list:
         response = []
         for result in results:
-            title, text = self.parser.get_info(f'{self.parser.main_url}'
-                                               f'{result}')
+            title, text = self.parser.get_info(result)
             response.append({'title': title,
                              'text': text,
-                             'href': f'{self.parser.main_url}{result}'})
+                             'href': result})
         return response
 
 
 if __name__ == '__main__':
-    engine = SearchEngine('https://newgramm.pythonanywhere.com/', 'stop_words.txt', 'robots.txt')
-    print(engine.handle_query('вход'))
+    engine = SearchEngine('https://telegram.org/', 'stop_words.txt', 'robots.txt')
+    print(engine.handle_query('мессенджер'))

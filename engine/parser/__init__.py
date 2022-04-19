@@ -18,30 +18,50 @@ class Parser:
 
     def get_urls(self):
         self.urls = []
-        self._get_urls_from_page('')
+        self._get_urls_from_page(self.main_url)
+
+    def filter_link(self, link_url: str) -> bool:
+        file_formats = ('.pdf', '.txt', '.xlsx', '.ini', '.xls',
+                        '.doc', '.docx', '.ppt', '.pptx', '.json')
+        spec_symbols = ('?', '#', '@')
+        if all(exception not in link_url
+               for exception in self.exception_urls) and \
+                all(not link_url.lower().endswith(files_format)
+                    for files_format in file_formats) and \
+                all(spec_symbol not in link_url
+                    for spec_symbol in spec_symbols):
+            return True
+        return False
 
     def _get_urls_from_page(self, page_url: str):
-        file_formats = ('.pdf', '.txt', '.xlsx', '.ini', '.xls',
-                        '.doc', '.docx', '.ppt', '.pptx')
-        content = self.status_code_handler(f'{self.main_url}/{page_url}')
+        content = self.status_code_handler(page_url)
         soup = BeautifulSoup(content.text, 'html.parser')
-        self.content_dict[page_url] = filter_text(soup.get_text(),
-                                                  stop_words=self.stop_words)
+
+        self.content_dict[page_url] = \
+            filter_text(soup.get_text(),
+                        stop_words=self.stop_words)
+
         links_queue = []
         for tag in soup.find_all('a'):
             link = tag.get('href')
             if link is not None:
-                if not (self.main_url not in link and '://' in link):
-                    if self.main_url in link:
-                        link = link.replace(self.main_url, '/')
-                    if all(not link.startswith(exception)
-                           for exception in self.exception_urls) and \
-                            all(not link.lower().endswith(files_format)
-                                for files_format in file_formats):
-                        if link not in self.urls:
-                            self.urls.append(link)
-                            links_queue.append(link)
-        print(len(self.content_dict))
+                root_url = page_url.split('//')[1].split('/')[0]
+                main_protocol = self.main_url.split('//')[0] + '//'
+                if link.startswith('//'):
+                    link = link.replace('//', main_protocol)
+                else:
+                    if '://' not in link:
+                        if not link.startswith('/'):
+                            link = '/' + link
+                        link = main_protocol + root_url + link
+                    elif root_url in link:
+                        pass
+                    else:
+                        continue
+                if self.filter_link(link):
+                    if link not in self.urls:
+                        self.urls.append(link)
+                        links_queue.append(link)
         for link in links_queue:
             self._get_urls_from_page(link)
 
