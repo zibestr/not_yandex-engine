@@ -56,7 +56,9 @@ class SearchQueryGenerator:
         for value in self.index.total_index.values():
             for page in value:
                 if page in results:
-                    sum_words += len(page)
+                    sum_words[page] += len(page)
+        for key in sum_words.keys():
+            sum_words[key] = max(sum_words[key], 1)
         rating = {result: (count_word[result] / sum_words[result]) *
                           log(self.index.count_pages / len(results))
                   for result in results}

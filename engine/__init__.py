@@ -63,5 +63,5 @@ class SearchEngine:
 
 
 if __name__ == '__main__':
-    engine = SearchEngine('http://gimnazia6.ru/', 'stop_words.txt', 'robots.txt')
-    print(engine.handle_query('гимназия'))
+    engine = SearchEngine('https://newgramm.pythonanywhere.com/', 'stop_words.txt', 'robots.txt')
+    print(engine.handle_query('вход'))
