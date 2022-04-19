@@ -445,8 +445,7 @@ hr {
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
-    margin-top: -54px;
-    margin-left: 125px;
+    margin-left: 20px;
 }
 
 .btn-cancel:hover{
@@ -468,6 +467,70 @@ hr {
 .btn-settings:hover{
     background-color: #357ae8;
     background-image: -webkit-linear-gradient(top, #4d90fe, #357ae8);
+}
+
+.settings-load{
+    font-size: 17px;
+    margin-bottom: 10px;
+    color: red;
+}
+
+.error-settings{
+    color: red;
+    margin-top: -15px;
+    margin-bottom: 15px;
+}
+
+.text-settings{
+    margin-left: 210px;
+    margin-top: 20px;
+}
+
+.minuses{
+    margin-left: 210px;
+}
+
+.button-remove-minus{
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 0.25rem;
+    height: 25px;
+    width: 25px;
+    margin-top: -5px;
+    cursor: pointer;
+}
+
+.settings-add-minus{
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    background-color: white;
+    border: 1px solid gray;
+    border-radius: 0.25rem;
+    height: 30px;
+    width: 480px;
+    margin-top: -5px;
+    cursor: pointer;
+    margin-left: 210px;
+    margin-bottom: 10px;
+}
+
+.settings_minus{
+    margin-bottom: 10px;
+}
+
+.image-minus{
+    width: 15px;
+    height: auto;
+    margin-top: -5px;
+}
+
+.image-plus{
+    width: 20px;
+    height: auto;
 }
 
 @media screen and (max-width: 1300px) {

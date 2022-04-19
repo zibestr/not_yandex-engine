@@ -21,8 +21,8 @@ class SearchEngine:
             self.stop_words = map(lambda word: word.replace('\n', ''),
                                   file.readlines())
 
-        self.site_exceptions = []
-        self.site_additional = []
+        site_exceptions = []
+        site_additional = []
         with open(f'{os.getcwd()}/{robots_file}',
                   encoding='UTF-8') as file:
             for line in file.readlines():
@@ -30,18 +30,21 @@ class SearchEngine:
                     raise WrongRobotsFormatError('Wrong robots.txt format')
                 char, page_url = line.replace('\n', '').split()
                 if char == '-':
-                    self.site_exceptions.append(page_url)
+                    site_exceptions.append(page_url)
                 elif char == '+':
-                    self.site_additional.append(page_url)
+                    site_additional.append(page_url)
 
         self.parser = Parser(url, self.stop_words,
-                             headers, self.site_exceptions,
-                             self.site_additional)
+                             headers, site_exceptions,
+                             site_additional)
         self.index = SearchIndex(self.parser, self.stop_words)
         self.query_generator = SearchQueryGenerator(self.index,
                                                     self.stop_words)
 
         self.index.load_index()
+
+    def recreate_index(self):
+        self.index.create()
 
     def handle_query(self, text_query: str) -> list:
         return self.make_format_response(self
@@ -62,3 +65,8 @@ class SearchEngine:
                              'text': text,
                              'href': result})
         return response
+
+
+if __name__ == '__main__':
+    engine = SearchEngine('https://telegram.org/', 'stop_words.txt', 'robots.txt')
+    print(engine.handle_query('telegram'))

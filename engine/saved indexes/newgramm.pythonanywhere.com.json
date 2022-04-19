@@ -1,0 +1,447 @@
+{
+    "вход": {
+        "https://newgramm.pythonanywhere.com/login": [
+            0,
+            8,
+            9
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            8
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            8
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            9
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            8
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            8
+        ]
+    },
+    "ewgramm": {
+        "https://newgramm.pythonanywhere.com/login": [
+            1
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            1
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            1
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            2
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            1
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            1
+        ]
+    },
+    "лента": {
+        "https://newgramm.pythonanywhere.com/login": [
+            2
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            2
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            2
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            3
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            0,
+            2,
+            14
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            2
+        ]
+    },
+    "рекомендация": {
+        "https://newgramm.pythonanywhere.com/login": [
+            3
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            3
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            0,
+            3
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            4
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            3
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            3
+        ]
+    },
+    "поиск": {
+        "https://newgramm.pythonanywhere.com/login": [
+            4
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            0,
+            4
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            4
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            5
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            4
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            4
+        ]
+    },
+    "создать": {
+        "https://newgramm.pythonanywhere.com/login": [
+            5
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            5
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            5
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            0,
+            6
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            5
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            5
+        ]
+    },
+    "пост": {
+        "https://newgramm.pythonanywhere.com/login": [
+            6
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            6
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            6,
+            16
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            1,
+            7,
+            14
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            6,
+            15
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            6
+        ]
+    },
+    "регистрация": {
+        "https://newgramm.pythonanywhere.com/login": [
+            7
+        ],
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            7
+        ],
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            7
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            8
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            7
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            0,
+            7,
+            9
+        ]
+    },
+    "почта": {
+        "https://newgramm.pythonanywhere.com/login": [
+            10
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            15
+        ]
+    },
+    "пароль": {
+        "https://newgramm.pythonanywhere.com/login": [
+            11
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            16,
+            18
+        ]
+    },
+    "запомнить": {
+        "https://newgramm.pythonanywhere.com/login": [
+            12
+        ]
+    },
+    "я": {
+        "https://newgramm.pythonanywhere.com/login": [
+            13
+        ]
+    },
+    "найти": {
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            9
+        ]
+    },
+    "пользователь": {
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            10
+        ]
+    },
+    "искать": {
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            11
+        ]
+    },
+    "по": {
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            12
+        ]
+    },
+    "не": {
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            13
+        ]
+    },
+    "выбраноименипочта": {
+        "https://newgramm.pythonanywhere.com/search/_/0": [
+            14
+        ]
+    },
+    "зарегистрироваться": {
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            9
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            18
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            9
+        ]
+    },
+    "или": {
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            10
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            17
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            10
+        ],
+        "https://newgramm.pythonanywhere.com/registration": [
+            26
+        ]
+    },
+    "войти": {
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            11
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            16
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            11
+        ]
+    },
+    "чтобы": {
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            12
+        ],
+        "https://newgramm.pythonanywhere.com/create_post": [
+            10
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            12
+        ]
+    },
+    "смотреть": {
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            13
+        ],
+        "https://newgramm.pythonanywhere.com/": [
+            13
+        ]
+    },
+    "рекомендовать": {
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            14
+        ]
+    },
+    "вы": {
+        "https://newgramm.pythonanywhere.com/recommendations": [
+            15
+        ]
+    },
+    "иметь": {
+        "https://newgramm.pythonanywhere.com/create_post": [
+            11
+        ]
+    },
+    "возможность": {
+        "https://newgramm.pythonanywhere.com/create_post": [
+            12
+        ]
+    },
+    "выкладывать": {
+        "https://newgramm.pythonanywhere.com/create_post": [
+            13
+        ]
+    },
+    "сначала": {
+        "https://newgramm.pythonanywhere.com/create_post": [
+            15
+        ]
+    },
+    "ваш": {
+        "https://newgramm.pythonanywhere.com/": [
+            16
+        ]
+    },
+    "любимый": {
+        "https://newgramm.pythonanywhere.com/": [
+            17
+        ]
+    },
+    "автор": {
+        "https://newgramm.pythonanywhere.com/": [
+            18
+        ]
+    },
+    "ник": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            10
+        ]
+    },
+    "описание": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            11
+        ]
+    },
+    "фото": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            12
+        ]
+    },
+    "профиль": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            13
+        ]
+    },
+    "возраст": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            14
+        ]
+    },
+    "повторить": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            17
+        ]
+    },
+    "какой": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            19
+        ]
+    },
+    "тема": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            20
+        ]
+    },
+    "нравиться": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            21
+        ]
+    },
+    "для": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            22
+        ]
+    },
+    "выбор": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            23
+        ]
+    },
+    "несколько": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            24
+        ]
+    },
+    "вариант": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            25
+        ]
+    },
+    "убирание": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            27
+        ]
+    },
+    "один": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            28
+        ]
+    },
+    "зажать": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            29
+        ]
+    },
+    "ctrl": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            30
+        ]
+    },
+    "животныецитатадизайниллюстрациипутешествияобразованиеразвлечениеархитектуратехнологииспортздоровьенаучный": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            31
+        ]
+    },
+    "фантастикасадоводствоед": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            32
+        ]
+    },
+    "и": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            33
+        ]
+    },
+    "напиткиживописьнаукаигрыполитикаанимеюморавтомобилиромантикаискусствострить": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            34
+        ]
+    },
+    "артфотография": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            35
+        ]
+    },
+    "отмена": {
+        "https://newgramm.pythonanywhere.com/registration": [
+            36
+        ]
+    }
+}

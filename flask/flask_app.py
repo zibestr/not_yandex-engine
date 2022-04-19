@@ -1,20 +1,24 @@
-from enchant.checker import SpellChecker
 from flask import render_template, redirect, request, session
 from flask import Flask
 import enchant
 import difflib
 
+from requests import get, post
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'not_yandex'
 
 
-def create_answers(text):
-    # Короче тут по text находим нужные запросы и выдаёт в итоге список словарей
-    # с ключами: название сайта, текст сайта (любой), ссылка сайта
-    return [{'title': 'Негры',
-              'text': "Длинный текст который, надеюсь будет обрезан. Ведь в гугле было также и если у меня не получится то это будет просто пиздец и с таким проетом мы никогда не сможем выиграть.",
-              'href': "http://niggers/buy/man"},
-             {'title': 'Помогите', 'text': "Короткий текст", 'href': "https://niggers/buy/woman"}]
+def create_robots():
+    robots_minus, robots_plus = [], []
+    with open("../engine/robots.txt") as file:
+        list_ = list(map(lambda x: x.replace("\n", ''), file.readlines()))
+        for i, word in enumerate(list_):
+            if word.split()[0] == "-":
+                robots_minus.append((i, word.split()[1]))
+            else:
+                robots_plus.append((i, word.split()[1]))
+    return robots_minus, robots_plus
 
 
 def create_session(text):
@@ -77,19 +81,27 @@ def search(text, enable_fix):
     text = ' '.join(text.split())
     create_session(text)
     helpers = get_session(text)
-    list_ = create_answers(fix_text)
+    list_ = get(f"http://127.0.0.1:5000/api/search/{text}").json()
     return render_template("search_result.html", query=text, results=list_, count=len(list_), helpers=helpers,
                            fix_message=fix_message, fix_text=fix_text)
 
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    return render_template("settings.html")
+    url_now = get('http://127.0.0.1:5000/api/change').json()
+    robots_minus, robots_plus = create_robots()
+    if request.method == 'POST':
+        result = post('http://127.0.0.1:5000/api/change', json={'new_url': request.form.get('text')})
+        if result.json()['message'] == 'Error':
+            return render_template('settings.html', url_now=url_now, error_message="Введите корректную ссылку")
+        return redirect('/')
+    return render_template('settings.html', url_now=url_now, robots_plus=robots_plus,
+                           robots_minus=robots_minus)
 
 
 @app.route('/documentation')
 def documentation():
-    return render_template("documentation.html")
+    return render_template('documentation.html')
 
 
 if __name__ == '__main__':

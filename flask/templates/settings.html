@@ -13,15 +13,32 @@
     <p class="settings-name">Настройки поиска</p>
     <hr class="underline-settings">
     <div class="settings-block"></div>
-    <form action="/settings" class="form-settings" method="post"><p class="first-form-settings">
-        <b >Ссылка на сайт, в котором будет проводиться поиск</b></p>
-        <p><input type="text" class="settings-input" placeholder="Введите ссылку">
-        <p><b>Анализ сайтов и их страниц</b></p>
-        <p>Возможность анализировать только страницу, на которую ведёт указанная ссылка</p>
-        <p><input name="dzen" type="radio" value="nedzen" class="settings-ratio" id="qwe"> Анализировать только страницу, на которую ведёт ссылка</p>
-        <p><input name="dzen" type="radio" value="dzen" class="settings-ratio" id="qwe"> Анализировать все страницы отвлетвления от ссылки</p>
-        <p><input class="btn-settings" type="submit" value="Сохранить"></p>
+    <form action="/settings" class="form-settings" method="post">
+        <p class="first-form-settings">
+        <b>Ссылка на сайт, в котором будет проводиться поиск</b></p>
+        <p><input name="text"  type="text" value="{{ url_now }}" class="settings-input" placeholder="Введите ссылку"></p>
+        {% if error_message %}
+            <p class="error-settings"> {{ error_message }}</p>
+        {% endif %}
+        <p class="settings-load">❗Изменение ссылки на новую может занять ОГРОМНОЕ количество времени❗</p>
+        <input class="btn-settings" type="submit" onclick="process()" value="Сохранить">
         <a href="/" class="btn-cancel">Отмена</a>
+        <p class="text-settings"><b>Список ссылок-исключений</b></p>
+        <div id="minuses" class="minuses">
+            {% for minus in robots_minus %}
+                <div class="settings_minus">
+                    <input name="minus{{ minus[0] }}" type="text" value="{{ minus[1] }}" class="settings-input" >
+                    <a class="button-remove-minus">
+                        <img src="static/img/Minus.png" class="image-minus">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <a class="settings-add-minus" id="add-minus">
+            <img src="static/img/Plus.png" class="image-plus">
+        </a>
     </form>
+    <script src="/static/js/jquery-3.6.0.js"></script>
+    <script src="static/js/script.js"></script>
 </body>
 </html>
