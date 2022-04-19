@@ -2,6 +2,7 @@ from engine.utils import edit_string, morph_word, filter_text
 from engine.index import SearchIndex
 from engine.query_generator.handler import QueryHandler
 from math import log, sqrt
+from pprint import pprint
 
 
 class SearchQueryGenerator:
@@ -30,6 +31,7 @@ class SearchQueryGenerator:
         total_index = self.index.total_index
         query_list = list(self.make_query(string))
         list_of_lists, result = [], []
+        rating = {}
         for word in query_list:
             list_of_lists.append(self.__one_word_query__(word))
         setted = set(list_of_lists[0]).intersection(*list_of_lists)
@@ -42,10 +44,18 @@ class SearchQueryGenerator:
                     temp[i][ind] -= i
             if set(temp[0]).intersection(*temp):
                 result.append(page)
-        return self.range_algorithm(query_list, result)
+                rating[page] = len(query_list) + 1
+        for response_seq in list_of_lists:
+            for page in response_seq:
+                if page not in result:
+                    rating[page] = 1
+                    result.append(page)
+                elif rating[page] < len(query_list) + 1:
+                    rating[page] += 1
+        return self.range_algorithm(query_list, result, rating)
 
     # tf-idf ранжирование + учёт глубины ссылки
-    def standard_range(self, query: list, results: list) -> list:
+    def standard_range(self, query: list, results: list, rating: dict) -> list:
         count_word = {result: 0 for result in results}
         for word in query:
             for result in results:
@@ -59,7 +69,7 @@ class SearchQueryGenerator:
                     sum_words[page] += len(page)
         for key in sum_words.keys():
             sum_words[key] = max(sum_words[key], 1)
-        rating = {result: (count_word[result] / sum_words[result])
+        rating = {result: rating[result] + (count_word[result] / sum_words[result])
                            * log(self.index.count_pages / len(results))
                            * (4 / sqrt(len(result.split('/'))) + 1)
                   for result in results}
