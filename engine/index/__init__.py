@@ -6,7 +6,7 @@ import os
 
 
 class SearchIndex:
-    def __init__(self, parser, stop_words: list):
+    def __init__(self, parser, stop_words: iter):
         self.parser = parser
 
         self.page_terms = {}
@@ -29,14 +29,12 @@ class SearchIndex:
                               .replace('/', '')
                               + '.json')
 
-    # делает промежуточные хеш таблицы
-    def _process_pages(self) -> dict:
+    def _make_term_dict(self) -> dict:
         self.parser.get_urls()
         self.page_terms = self.parser.content_dict
         self.count_pages = len(self.page_terms)
         return self.page_terms
 
-    # индексирует один файл
     def _index_one_page(self, terms: list, key: str):
         page_index = {}
         for ind, word in enumerate(terms):
@@ -46,7 +44,6 @@ class SearchIndex:
                 page_index[word] = [ind]
         self._sl[key] = page_index
 
-    # индексирует все файлы
     def _index_all_pages(self):
         self._sl = {}
         index_threads = []
@@ -59,7 +56,6 @@ class SearchIndex:
             thread.join()
         self.page_terms = self._sl
 
-    # формирует окончательный индекс
     def _full_index(self):
         buffer = {}
         for page_url in self.page_terms.keys():
@@ -78,9 +74,8 @@ class SearchIndex:
                                     self.page_terms[page_url][word]}
         self.total_index = buffer
 
-    # формирует индекс
     def create(self):
-        self._process_pages()
+        self._make_term_dict()
         self._index_all_pages()
         self._full_index()
 

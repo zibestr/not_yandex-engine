@@ -1,1 +1,0 @@
-### def _index_one_page(self, terms: list, key: str)

@@ -9,7 +9,7 @@ from engine.parser import Parser
 
 
 class SearchEngine:
-    def __init__(self, url, stop_words_file, robots_file):
+    def __init__(self, url: str, stop_words_file: str, robots_file: str):
         headers = {
             'accept': 'text/html,application/xhtml+xml,'
                       'application/xml;q=0.9,'

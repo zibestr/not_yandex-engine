@@ -3,6 +3,5 @@
 - ### [def change_url()](change_url.md)
 - ### [def get_urls()](get_urls.md)
 - ### [def filter_link()](filter_link.md)
-- ### [def _get_urls_from_page()](_get_urls_from_page.md)
 - ### [def status_code_handler()](status_code_handler.md)
 - ### [def get_info()](get_info.md)
