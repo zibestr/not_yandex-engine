@@ -100,6 +100,7 @@
     box-shadow: 0 0 7px 0px #888;
     top: 0;
     left: 0;
+    background-color: white;
 }
 
 .logo-result{
@@ -248,7 +249,7 @@ input::-webkit-calendar-picker-indicator {
 
 .help-shadow{
     width: 561px;
-    height: 41px;
+    height: 42px;
     box-shadow: 0 0 5px 0 #888;
 }
 
@@ -623,10 +624,18 @@ hr {
     }
 
     .help-shadow{
-        width: 406px;
+        width: 446px;
     }
 
     .help{
+        width: 446px;
+    }
+
+    .help-shadow-result{
+        width: 406px;
+    }
+
+    .help-result{
         width: 406px;
     }
 
