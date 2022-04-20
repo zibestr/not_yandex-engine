@@ -1,4 +1,3 @@
-from enchant.checker import SpellChecker
 from flask import render_template, redirect, request, session
 from flask import Flask
 import enchant
@@ -10,7 +9,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'not_yandex'
 
 
-def create_robots():
+def create_robots() -> tuple:
     robots_minus, robots_plus = [], []
     with open("../engine/robots.txt") as file:
         list_ = list(map(lambda x: x.replace("\n", ''), file.readlines()))
@@ -22,7 +21,7 @@ def create_robots():
     return robots_minus, robots_plus
 
 
-def write_robots():
+def write_robots() -> None:
     list_ = []
     for i in range(session.get('minus')):
         if request.form.get(f'minus{i}') is not None and request.form.get(f'minus{i}') != '':
@@ -34,7 +33,7 @@ def write_robots():
         file.write('\n'.join(list_))
 
 
-def create_session(text):
+def create_session(text: str) -> None:
     if 'search' in session:
         if text not in session.get('search'):
             session['search'].insert(0, text)
@@ -42,7 +41,7 @@ def create_session(text):
         session['search'] = [text]
 
 
-def get_session(text):
+def get_session(text: str) -> list:
     list_ = []
     if 'search' in session:
         list_ = session.get('search')[:8]
@@ -51,7 +50,7 @@ def get_session(text):
     return list_
 
 
-def correct_text(text):
+def correct_text(text: str) -> tuple:
     dictionary = enchant.Dict("ru_RU")
     fixed_text = []
     message = []
@@ -115,7 +114,7 @@ def settings():
 
 
 @app.route('/get_response', methods=['GET', 'POST'])
-def documentation():
+def get_response():
     if request.method == 'POST':
         if 'num-minus' in request.json:
             session['minus'] += 1
