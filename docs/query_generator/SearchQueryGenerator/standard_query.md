@@ -1,0 +1,1 @@
+### def standard_query(self, string: str) -> (list, list, dict)

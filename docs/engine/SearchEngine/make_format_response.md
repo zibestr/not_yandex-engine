@@ -1,0 +1,1 @@
+### def make_format_response(self, results: list) -> list

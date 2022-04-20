@@ -1,3 +1,4 @@
 # Классы
-- ### пкуп
-- ### пкупук
+- ### [Query](Query/index.md)
+- ### [QueryHandler](QueryHandler/index.md)
+- ### [SearchQueryGenerator](SearchQueryGenerator/index.md)

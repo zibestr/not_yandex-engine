@@ -1,0 +1,1 @@
+### def handle_query(self, text_query: str) -> (list, list, dict)

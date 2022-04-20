@@ -1,0 +1,1 @@
+### def \_\_one_word_query__(self, word: str) -> list

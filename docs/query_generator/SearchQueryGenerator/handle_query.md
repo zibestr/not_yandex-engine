@@ -1,0 +1,1 @@
+### def handle_query(self, string: str) -> list

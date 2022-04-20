@@ -1,0 +1,1 @@
+### def handler_not(self, query: list) -> (list, dict)

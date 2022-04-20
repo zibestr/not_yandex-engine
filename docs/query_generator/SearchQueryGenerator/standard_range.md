@@ -1,0 +1,1 @@
+### def standard_range(self, query: list, results: list, rating: dict) -> list
