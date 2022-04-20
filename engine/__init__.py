@@ -1,5 +1,7 @@
 import os
 
+import requests
+
 from engine.exceptions import WrongRobotsFormatError
 from engine.index import SearchIndex
 from engine.query_generator import SearchQueryGenerator
@@ -61,12 +63,11 @@ class SearchEngine:
     def make_format_response(self, results: list) -> list:
         response = []
         for result in results:
-            title, text = self.parser.get_info(result)
+            try:
+                title, text = self.parser.get_info(result)
+            except requests.exceptions.ConnectionError:
+                continue
             response.append({'title': title,
                              'text': text,
                              'href': result})
         return response
-
-
-if __name__ == '__main__':
-    engine = SearchEngine('https://docs-python.ru/', 'stop_words.txt', 'robots.txt')

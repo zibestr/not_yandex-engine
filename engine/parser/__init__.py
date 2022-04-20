@@ -45,7 +45,6 @@ class Parser:
                         stop_words=self.stop_words)
 
         links_queue = []
-        print(list(self.content_dict.keys())[-1], len(self.content_dict))
         for tag in soup.find_all('a'):
             link = tag.get('href')
             if link is not None:
@@ -80,7 +79,7 @@ class Parser:
             raise PageNotAvailableError('Parsed page is not available. HTTP code: ' + str(content.status_code))
 
     def get_info(self, url):
-        content = get_content(url, headers=self.headers)
+        content = self.status_code_handler(url)
         soup = BeautifulSoup(content.text, 'html.parser')
         title = soup.find('title').get_text()
         tag = soup.find('meta', attrs={'name': 'description'})
