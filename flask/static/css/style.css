@@ -39,6 +39,10 @@
     display: block;
 }
 
+.helping-result:hover{
+    display: block;
+}
+
 .search_help:focus~.helping{
     display: block;
 }
@@ -244,7 +248,7 @@ input::-webkit-calendar-picker-indicator {
 
 .help-shadow{
     width: 561px;
-    height: 45px;
+    height: 41px;
     box-shadow: 0 0 5px 0 #888;
 }
 
@@ -415,7 +419,7 @@ hr {
 }
 
 .btn-settings{
-    display: inline-block;
+    display: block;
     font-weight: 400;
     color: #212529;
     text-align: center;
@@ -428,6 +432,7 @@ hr {
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
+    margin-bottom: 20px;
 }
 
 .btn-cancel{
@@ -445,7 +450,8 @@ hr {
     font-size: 1rem;
     line-height: 1.5;
     border-radius: 0.25rem;
-    margin-left: 20px;
+    margin-left: 130px;
+    margin-top: -58px;
 }
 
 .btn-cancel:hover{
@@ -482,15 +488,10 @@ hr {
 }
 
 .text-settings{
-    margin-left: 210px;
     margin-top: 20px;
 }
 
-.minuses{
-    margin-left: 210px;
-}
-
-.button-remove-minus{
+.button-remove{
     display: inline-block;
     text-align: center;
     vertical-align: middle;
@@ -514,7 +515,6 @@ hr {
     width: 480px;
     margin-top: -5px;
     cursor: pointer;
-    margin-left: 210px;
     margin-bottom: 10px;
 }
 
@@ -539,7 +539,7 @@ hr {
     }
 
     .count-results{
-        margin-left: 8vw;
+        margin-left: 23vw;
     }
 
     .logo-result{
@@ -557,6 +557,14 @@ hr {
     .post-icon-result{
         margin-left: 450px;
     }
+
+    .help-shadow-result{
+        width: 506px;
+    }
+
+    .help-result{
+        width: 506px;
+    }
 }
 
 @media screen and (max-width: 830px) {
@@ -565,11 +573,11 @@ hr {
     }
 
     .count-results{
-        margin-left: 65px;
+        margin-left: 195px;
     }
 
     .logo-result{
-        margin-left: 75px;
+        margin-left: 25px;
     }
 
     .search-form{
@@ -578,6 +586,26 @@ hr {
 
     .form-settings{
         margin-left: 20vw;
+    }
+
+    .search-result{
+        width: 320px;
+    }
+
+    .post-icon-result{
+        margin-left: 350px;
+    }
+
+    .help-shadow-result{
+        width: 406px;
+    }
+
+    .help-result{
+        width: 406px;
+    }
+
+    .help-text{
+        width: 336px;
     }
 }
 
@@ -595,15 +623,23 @@ hr {
     }
 
     .help-shadow{
-        width: 446px;
+        width: 406px;
     }
 
     .help{
-        width: 446px;
+        width: 406px;
     }
 
     .form-settings{
         margin-left: 1vw;
+    }
+
+    .side-logo-s{
+        left: 580px;
+    }
+
+    .search-form{
+        margin-left: 170px;
     }
 }
 

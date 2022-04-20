@@ -1,3 +1,4 @@
+from enchant.checker import SpellChecker
 from flask import render_template, redirect, request, session
 from flask import Flask
 import enchant
@@ -19,6 +20,18 @@ def create_robots():
             else:
                 robots_plus.append((i, word.split()[1]))
     return robots_minus, robots_plus
+
+
+def write_robots():
+    list_ = []
+    for i in range(session.get('minus')):
+        if request.form.get(f'minus{i}') is not None and request.form.get(f'minus{i}') != '':
+            list_.append('- ' + request.form.get(f'minus{i}'))
+    for i in range(session.get('plus')):
+        if request.form.get(f'plus{i}') is not None and request.form.get(f'plus{i}') != '':
+            list_.append('+ ' + request.form.get(f'plus{i}'))
+    with open("../engine/robots.txt", "w") as file:
+        file.write('\n'.join(list_))
 
 
 def create_session(text):
@@ -56,9 +69,8 @@ def correct_text(text):
                 sim[measure] = word
             fixed_text.append(sim[max(sim.keys())])
 
-    if not set(text) - set(fixed_text):
-        return ' '.join(text), message
-    message = [word + tag if word != text[i] else text[i] for i, word in enumerate(fixed_text)]
+    if set(text) - set(fixed_text):
+        message = [word + tag if word != text[i] else text[i] for i, word in enumerate(fixed_text)]
     return ' '.join(fixed_text), message
 
 
@@ -89,19 +101,27 @@ def search(text, enable_fix):
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
     url_now = get('http://127.0.0.1:5000/api/change').json()
-    robots_minus, robots_plus = create_robots()
     if request.method == 'POST':
+        write_robots()
         result = post('http://127.0.0.1:5000/api/change', json={'new_url': request.form.get('text')})
         if result.json()['message'] == 'Error':
             return render_template('settings.html', url_now=url_now, error_message="Введите корректную ссылку")
         return redirect('/')
+    robots_minus, robots_plus = create_robots()
+    session['minus'] = len(robots_minus)
+    session['plus'] = len(robots_plus)
     return render_template('settings.html', url_now=url_now, robots_plus=robots_plus,
                            robots_minus=robots_minus)
 
 
-@app.route('/documentation')
+@app.route('/get_response', methods=['GET', 'POST'])
 def documentation():
-    return render_template('documentation.html')
+    if request.method == 'POST':
+        if 'num-minus' in request.json:
+            session['minus'] += 1
+        else:
+            session['plus'] += 1
+    return request.json
 
 
 if __name__ == '__main__':

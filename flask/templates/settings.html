@@ -21,14 +21,13 @@
             <p class="error-settings"> {{ error_message }}</p>
         {% endif %}
         <p class="settings-load">❗Изменение ссылки на новую может занять ОГРОМНОЕ количество времени❗</p>
-        <input class="btn-settings" type="submit" onclick="process()" value="Сохранить">
-        <a href="/" class="btn-cancel">Отмена</a>
+
         <p class="text-settings"><b>Список ссылок-исключений</b></p>
         <div id="minuses" class="minuses">
             {% for minus in robots_minus %}
                 <div class="settings_minus">
-                    <input name="minus{{ minus[0] }}" type="text" value="{{ minus[1] }}" class="settings-input" >
-                    <a class="button-remove-minus">
+                    <input name="minus{{ minus[0] }}" placeholder='Введите ссылку-исключение' type="text" value="{{ minus[1] }}" class="settings-input" >
+                    <a class="button-remove">
                         <img src="static/img/Minus.png" class="image-minus">
                     </a>
                 </div>
@@ -37,6 +36,23 @@
         <a class="settings-add-minus" id="add-minus">
             <img src="static/img/Plus.png" class="image-plus">
         </a>
+
+        <p class="text-settings"><b>Список дополнительных ссылок</b></p>
+        <div id="pluses" class="minuses">
+            {% for plus in robots_plus %}
+                <div class="settings_plus">
+                    <input name="plus{{ plus[0] }}" placeholder='Введите дополнительную ссылку' type="text" value="{{ plus[1] }}" class="settings-input" >
+                    <a class="button-remove">
+                        <img src="static/img/Minus.png" class="image-minus">
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+        <a class="settings-add-minus" id="add-plus">
+            <img src="static/img/Plus.png" class="image-plus">
+        </a>
+        <input class="btn-settings" type="submit" onclick="process()" value="Сохранить">
+        <a href="/" class="btn-cancel">Отмена</a>
     </form>
     <script src="/static/js/jquery-3.6.0.js"></script>
     <script src="static/js/script.js"></script>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
-    <link rel="shortcut icon" href="static/img/Logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="/static/img/Logo.ico" type="image/x-icon">
     <title>{{ query }} - Поиск в notYandex</title>
 </head>
 <body>
@@ -13,9 +13,9 @@
         <form id="search" method="post" action="/" class="search-form">
             <img src="{{url_for('static', filename='img/Post.png')}}" class="post-icon-result" onclick="search.submit()">
             {% if helpers %}
-                <input name="text" value="{{ query }}" type="text" placeholder="Введите поисковый запрос" class="search-result search_help" autocomplete="off">
+                <input id="search-input" name="text" value="{{ query }}" type="text" placeholder="Введите поисковый запрос" class="search-result search_help" autocomplete="off">
             {% else %}
-                <input name="text" value="{{ query }}" type="text" placeholder="Введите поисковый запрос" class="search-result" autocomplete="off">
+                <input id="search-input" name="text" value="{{ query }}" type="text" placeholder="Введите поисковый запрос" class="search-result" autocomplete="off">
             {% endif %}
             <span class="helping-result">
                 <img src="{{url_for('static', filename='img/Search.png')}}" class="result-icon">
@@ -37,7 +37,7 @@
         </form>
     </header>
     <nav class="block"></nav>
-    {% if fix_message %}
+    {% if fix_message and count %}
         <p class="fix_message"> Показаны результаты по запросу <a href="/search_result/{{ fix_text }}/1" class="fix-href">
             {% for word in fix_message %}
                 {% if '/fixed' in word %}
@@ -50,7 +50,11 @@
         <p class="fix_message fix_off"> Искать вместо этого <a class="fix-href" href="/search_result/{{ query }}/0"> {{ query }}</a></p>
     {% endif %}
     <main>
-        <p class="count-results"> Результатов: {{ count }}</p>
+        {% if count %}
+            <p class="count-results"> Результатов: {{ count }}</p>
+        {% else %}
+            <p class="count-results"> По запросу <b>«{{ query }}»</b> ничего не найдено</p>
+        {% endif %}
         {% for result in results %}
             <div class="block-result">
                 {% set list_=result['href'].split('/')%}
@@ -62,5 +66,7 @@
             </div>
         {% endfor %}
     </main>
+    <script src="/static/js/jquery-3.6.0.js"></script>
+    <script src="/static/js/script.js"></script>
 </body>
 </html>
