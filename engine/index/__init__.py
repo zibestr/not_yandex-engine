@@ -45,6 +45,7 @@ class SearchIndex:
             else:
                 page_index[word] = [ind]
         self._sl[key] = page_index
+        print(self._sl[key])
 
     # индексирует все файлы
     def _index_all_pages(self):
