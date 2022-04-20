@@ -5,7 +5,7 @@ from math import log, sqrt
 
 
 class SearchQueryGenerator:
-    def __init__(self, index: SearchIndex, stop_words,
+    def __init__(self, index: SearchIndex, stop_words: iter,
                  range_algorithm: callable = None):
         self.index = index
         if range_algorithm is None:
@@ -26,7 +26,13 @@ class SearchQueryGenerator:
     def make_query(self, string: str) -> list:
         return filter_text(edit_string(string), self.stop_words)
 
-    def phrase_query(self, string: str) -> list:
+    def handle_query(self, string: str) -> list:
+        if self.handler.is_query_language(string):
+            return self.range_algorithm(*self.handler.handle_query(string))
+        else:
+            return self.range_algorithm(*self.standard_query(string))
+
+    def standard_query(self, string: str) -> (list, list, dict):
         total_index = self.index.total_index
         query_list = list(self.make_query(string))
         list_of_lists, result = [], []
@@ -51,7 +57,7 @@ class SearchQueryGenerator:
                     result.append(page)
                 elif rating[page] < len(query_list) + 1:
                     rating[page] += 1
-        return self.range_algorithm(query_list, result, rating)
+        return query_list, result, rating
 
     # tf-idf ранжирование + учёт глубины ссылки
     def standard_range(self, query: list, results: list, rating: dict) -> list:
@@ -69,8 +75,8 @@ class SearchQueryGenerator:
         for key in sum_words.keys():
             sum_words[key] = max(sum_words[key], 1)
         rating = {result: rating[result] + (count_word[result] / sum_words[result])
-                           * log(self.index.count_pages / len(results))
-                           * (4 / sqrt(len(result.split('/'))) + 1)
+                          * log(self.index.count_pages / len(results))
+                          * (4 / sqrt(len(result.split('/'))) + 1)
                   for result in results}
         buffer_list = list(rating.items())
         buffer_list.sort(key=lambda i: -i[1])

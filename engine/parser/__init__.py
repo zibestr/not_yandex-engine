@@ -45,6 +45,7 @@ class Parser:
                         stop_words=self.stop_words)
 
         links_queue = []
+        print(list(self.content_dict.keys())[-1], len(self.content_dict))
         for tag in soup.find_all('a'):
             link = tag.get('href')
             if link is not None:
@@ -69,14 +70,14 @@ class Parser:
             self._get_urls_from_page(link)
 
     def status_code_handler(self, url: str) -> Response:
-        sleep(0.8)
+        sleep(1)
         content = get_content(url, headers=self.headers)
         if content.status_code == 200:
             return content
         elif content.status_code == 404:
             return Response()
         else:
-            raise PageNotAvailableError('Parsed page is not available')
+            raise PageNotAvailableError('Parsed page is not available. HTTP code: ' + str(content.status_code))
 
     def get_info(self, url):
         content = get_content(url, headers=self.headers)
@@ -86,5 +87,9 @@ class Parser:
         if tag is not None:
             text = tag.get('content') + ' ...'
         else:
-            text = '...'
+            words = soup.get_text('').strip().split()
+            try:
+                text = ' '.join(words[:25])
+            except IndexError:
+                text = ' '.join(words)
         return title, text
