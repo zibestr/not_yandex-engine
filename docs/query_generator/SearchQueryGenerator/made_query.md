@@ -1,0 +1,1 @@
+### def make_query(self, string: str) -> list

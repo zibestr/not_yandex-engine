@@ -1,0 +1,1 @@
+### def handler_and(self, query: list) -> (list, dict)

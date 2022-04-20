@@ -1,0 +1,1 @@
+### def handler_or(self, query: list) -> (list, dict)

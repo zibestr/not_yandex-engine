@@ -1,0 +1,1 @@
+### def \_\_init__(self, index: SearchIndex, stop_words: iter, range_algorithm: callable = None)

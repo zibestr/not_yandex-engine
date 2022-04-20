@@ -1,0 +1,1 @@
+### def \_\_init__(self, query_generator)

@@ -1,0 +1,1 @@
+### @staticmethod def is_query_language(query: str) -> bool
