@@ -59,7 +59,7 @@ def correct_text(text):
     tag = "/fixed"
 
     for woi in text:
-        if len(woi) == 1:
+        if len(woi) == 1 or '&' in woi or '|' in woi or '!' in woi:
             fixed_text.append(woi)
         else:
             sim = {}
@@ -93,7 +93,7 @@ def search(text, enable_fix):
     text = ' '.join(text.split())
     create_session(text)
     helpers = get_session(text)
-    list_ = get(f"http://127.0.0.1:5000/api/search/{text}").json()
+    list_ = get(f"http://127.0.0.1:5000/api/search/{fix_text}").json()
     return render_template("search_result.html", query=text, results=list_, count=len(list_), helpers=helpers,
                            fix_message=fix_message, fix_text=fix_text)
 
