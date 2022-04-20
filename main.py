@@ -7,7 +7,7 @@ import requests
 app = Flask(__name__)
 api = Api(app)
 app.config['SECRET_KEY'] = 'not_yandex'
-engine = SearchEngine('https://newgramm.pythonanywhere.com/', 'engine/stop_words.txt', 'engine/robots.txt')
+engine = SearchEngine('https://docs-python.ru/', 'engine/stop_words.txt', 'engine/robots.txt')
 
 parser = reqparse.RequestParser()
 parser.add_argument('new_url', required=True, type=str)
