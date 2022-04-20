@@ -6,7 +6,7 @@ import os
 
 
 class SearchIndex:
-    def __init__(self, parser, stop_words):
+    def __init__(self, parser, stop_words: list):
         self.parser = parser
 
         self.page_terms = {}
