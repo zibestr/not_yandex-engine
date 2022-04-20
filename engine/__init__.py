@@ -70,4 +70,3 @@ class SearchEngine:
 
 if __name__ == '__main__':
     engine = SearchEngine('https://docs-python.ru/', 'stop_words.txt', 'robots.txt')
-    print(engine.handle_query('{!telegram}'))
