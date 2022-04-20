@@ -38,10 +38,11 @@ class SearchEngine:
                              headers, site_exceptions,
                              site_additional)
         self.index = SearchIndex(self.parser, self.stop_words)
-        self.query_generator = SearchQueryGenerator(self.index,
-                                                    self.stop_words)
 
         self.index.load_index()
+
+        self.query_generator = SearchQueryGenerator(self.index,
+                                                    self.stop_words)
 
     def recreate_index(self):
         self.index.create()
@@ -49,7 +50,7 @@ class SearchEngine:
     def handle_query(self, text_query: str) -> list:
         return self.make_format_response(self
                                          .query_generator
-                                         .phrase_query(text_query))
+                                         .handle_query(text_query))
 
     def change_url(self, url: str):
         self.parser.change_url(url)
@@ -68,5 +69,5 @@ class SearchEngine:
 
 
 if __name__ == '__main__':
-    engine = SearchEngine('https://telegram.org/', 'stop_words.txt', 'robots.txt')
-    print(engine.handle_query('telegram'))
+    engine = SearchEngine('https://docs-python.ru/', 'stop_words.txt', 'robots.txt')
+    print(engine.handle_query('{!telegram}'))
