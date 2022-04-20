@@ -12,7 +12,7 @@ class SearchQueryGenerator:
             self.range_algorithm = self.standard_range
         else:
             self.range_algorithm = range_algorithm
-        self.handler = QueryHandler()
+        self.handler = QueryHandler(self)
         self.stop_words = stop_words
 
     def __one_word_query__(self, word: str) -> list:
