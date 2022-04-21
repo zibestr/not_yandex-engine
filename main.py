@@ -1,13 +1,27 @@
 from flask import Flask, jsonify
 from flask_restful import Api, Resource, reqparse
+
 from engine import SearchEngine
+
 import requests
+
+from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+env_path = Path('.')/'.env'
+load_dotenv(dotenv_path=env_path)
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+URL = os.getenv('URL')
 
 
 app = Flask(__name__)
 api = Api(app)
-app.config['SECRET_KEY'] = 'not_yandex'
-engine = SearchEngine('https://docs-python.ru/', 'engine/stop_words.txt', 'engine/robots.txt')
+app.config['SECRET_KEY'] = SECRET_KEY
+engine = SearchEngine(URL, 'engine/stop_words.txt', 'engine/robots.txt')
 
 parser = reqparse.RequestParser()
 parser.add_argument('new_url', required=True, type=str)
