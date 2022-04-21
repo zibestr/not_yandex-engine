@@ -18,6 +18,11 @@ $('.button-remove').click(function() {
 });
 
 
+function process(){
+    $(".load-text-settings").css("display", "block");
+}
+
+
 $('#add-minus').click(function () {
 
     $('#minuses').append("<div class='settings_minus'><input class='settings-input' placeholder='Введите ссылку-исключение' name='minus" + num_minus++ + "' type='text'>\n<a class='button-remove'>\n<img src='static/img/Minus.png' class='image-minus'>\n</a>\n<div>");

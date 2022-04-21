@@ -534,6 +534,10 @@ hr {
     height: auto;
 }
 
+.load-text-settings{
+    display: none;
+}
+
 @media screen and (max-width: 1300px) {
     .block-result{
         margin-left: 8vw;
