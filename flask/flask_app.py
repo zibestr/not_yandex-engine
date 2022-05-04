@@ -104,7 +104,9 @@ def settings():
         write_robots()
         result = post('http://127.0.0.1:5000/api/change', json={'new_url': request.form.get('text')})
         if result.json()['message'] == 'Error':
-            return render_template('settings.html', url_now=url_now, error_message="Введите корректную ссылку")
+            robots_minus, robots_plus = create_robots()
+            return render_template('settings.html', url_now=url_now, error_message="Введите корректную ссылку",
+                                   robots_plus=robots_plus, robots_minus=robots_minus)
         return redirect('/')
     robots_minus, robots_plus = create_robots()
     session['minus'] = len(robots_minus)
